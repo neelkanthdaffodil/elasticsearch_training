@@ -401,7 +401,7 @@
 					"raw": "{\n    \"script\": {\n        \"source\": \"ctx._source.post_slug = 'the-beauty-hack-toolbox-for-your-big-day-2'\",\n        \"lang\": \"painless\"\n    },\n    \"query\": {\n        \"term\": {\n            \"post_slug\": \"the-beauty-hack-toolbox-for-your-big-day-1\"\n        }\n    }\n}"
 				},
 				"url": {
-					"raw": "http://localhost:9200/training/_update_by_query?conflicts=proceed",
+					"raw": "http://localhost:9200/training/_update_by_query",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -410,12 +410,6 @@
 					"path": [
 						"training",
 						"_update_by_query"
-					],
-					"query": [
-						{
-							"key": "conflicts",
-							"value": "proceed"
-						}
 					]
 				}
 			},
@@ -447,6 +441,248 @@
 					"path": [
 						"training",
 						"_bulk"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pagination and Sort",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"from\": 0,\n    \"size\": 10,\n    \"query\": {\n        \"term\": {\n            \"post_slug\": \"the-beauty-hack-toolbox-for-your-big-day\"\n        }\n    },\n    \"sort\": [\n        {\n            \"post_date\": {\n                \"order\": \"desc\"\n            }\n        }\n    ],\n    \"_source\": [\n        \"post_title\"\n    ]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9200/training/_search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"training",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Match all",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"query\": {\n        \"match_all\": {}\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9200/_search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Range query",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"query\": {\n        \"range\": {\n            \"post_id\": {\n                \"gte\": 10,\n                \"lte\": 12\n            }\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9200/training/_search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"training",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fuzzy query",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"query\": {\n        \"fuzzy\": {\n            \"post_title\": \"embarassign\"\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9200/training/_search?explain",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"training",
+						"_search"
+					],
+					"query": [
+						{
+							"key": "explain",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Prefix query",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"query\": {\n        \"prefix\": {\n            \"post_slug\": \"the-beauty\"\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9200/training/_search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"training",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Match query",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"query\": {\n        \"multi_match\": {\n            \"query\": \"Hack Toolbox\",\n            \"fields\": [\n                \"post_title^2\",\n                \"post_content\"\n            ]\n        }\n    },\n    \"_source\": [\n        \"post_title\",\"post_content\"\n    ]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9200/training/_search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"training",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Boolean query",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"query\": {\n        \"bool\": {\n            \"must\": {\n                \"term\": {\n                    \"post_type\": \"post\"\n                }\n            },\n            \"must_not\": {\n                \"range\": {\n                    \"post_date\": {\n                        \"gte\": \"2018-11-28 06:38:37\",\n                        \"lte\": \"2018-12-28 06:38:37\"\n                    }\n                }\n            }\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9200/training/_search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"training",
+						"_search"
 					]
 				}
 			},
